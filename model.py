@@ -74,7 +74,8 @@ def model_custom_summary(results, print_out=False):
 
     if print_out:
         for row in data:
-            print(row)
+            rounded_row = [row[0]] + [round(x, 4) for x in row[1:]]
+            print(rounded_row)
 
     return data
 
