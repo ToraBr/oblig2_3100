@@ -41,6 +41,7 @@ def load_n_clean_data(path, clean=True, columns_to_remove = None, columns_to_dum
     #samlet funskjon, laster inn renser, fjerner og omkoder variabler.
     df = load_data(path)
     df = drop_unused_columns(df, columns_to_remove)
+    df.columns = df.columns.str.strip()
     if columns_to_dummy is not None:
         df = encode_categorical(df, columns_to_dummy)
     if map_stat_and_tariff:
@@ -50,19 +51,3 @@ def load_n_clean_data(path, clean=True, columns_to_remove = None, columns_to_dum
         df = clean_data(df)
     return df
 
-
-def stat_describe(df, print_out= False):
-    pd.set_option('display.max_rows', None)  # viser alle rader
-    pd.set_option('display.max_columns', None)  # viser alle kolonner
-
-    stats = pd.DataFrame()
-    stats['mean'] = df.mean()
-    stats['median'] = df.median()
-    stats['std'] = df.std()
-    stats['min'] = df.min()
-    stats['max'] = df.max()
-
-
-    if print_out:
-        print(stats)
-    return stats
