@@ -79,3 +79,22 @@ def plot_scatter(df, x_cols, y_col, figsize=(6,5), savefig=False):
             if savefig:
                 plt.savefig(f'{x}_scatter.png', bbox_inches='tight')
             plt.show()
+
+def scatter_XO(df, x_col, y_col, target = 'Churn', savefig=False):
+    """
+    funsjon som scatterplotter XO plot,
+    :param df: pd.dataframe
+    :param x_col: navn på x kolonne tilhørende df
+    :param y_col: navn på y verdi tilhørende dfd
+    :param target: utfallsvariabel, binær variabel, 0/1, default 'Churn' spesifikk til oblig 2
+    :param savefig: hvis True lagrer figur, default False
+    :return: ingenting, plotter.
+    """
+    x = df[x_col]
+    y = df[y_col]
+    target_var = df[target]
+    mask0 = target_var == 0 # maske for å sortere churnverdier
+    mask1 = target_var == 1
+    plt.scatter(x[mask0],y[mask0],marker = 'o',color= 'blue', alpha=0.5, label = 'Churn = 0')
+    plt.scatter(x[mask1],y[mask1],marker = 'x',color = 'red', alpha=0.5, label = 'Churn = 1')
+    plt.show()
