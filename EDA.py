@@ -53,3 +53,29 @@ def plot_histograms(df, columns, bins=20, figsize=(8,5), savefig = False):
         if savefig: plt.savefig(f'{col}.png', bbox_inches='tight')
         plt.show()
 
+
+def plot_scatter(df, x_cols, y_col, figsize=(6,5), savefig=False):
+    """
+    Genererer scatterplot(s) med spesifiserte x- verdier og y verdi. .
+
+    Args:
+        df (pd.DataFrame): Dataframe som innehodler dataene.
+        x_cols (list of str): Liste av kolonnenavn for x variabler.
+        y_col (str): et kolonnenavn, utfallsvariabel, y variabel.
+        figsize (tuple, optional): Figure str. Default (6,5).
+        savefig (bool, optional): hvis True, lagrer figur, default False..
+
+    Returns:
+        None
+    """
+
+    for x in x_cols:
+            plt.figure(figsize=figsize)
+            plt.scatter(df[x], df[y_col], alpha=0.6)
+            plt.xlabel(x)
+            plt.ylabel(y_col)
+            plt.title(f"{y_col} vs {x}")
+            plt.grid(True)
+            if savefig:
+                plt.savefig(f'{x}_scatter.png', bbox_inches='tight')
+            plt.show()
