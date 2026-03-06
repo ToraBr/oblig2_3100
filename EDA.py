@@ -95,6 +95,10 @@ def scatter_XO(df, x_col, y_col, target = 'Churn', savefig=False):
     target_var = df[target]
     mask0 = target_var == 0 # maske for å sortere churnverdier
     mask1 = target_var == 1
-    plt.scatter(x[mask0],y[mask0],marker = 'o',color= 'blue', alpha=0.5, label = 'Churn = 0')
-    plt.scatter(x[mask1],y[mask1],marker = 'x',color = 'red', alpha=0.5, label = 'Churn = 1')
+    plt.scatter(x[mask0],y[mask0],marker = 'o',color= 'skyblue', alpha=0.5, label = 'Churn = 0')
+    plt.scatter(x[mask1],y[mask1],marker = 'x',color = 'Tomato', alpha=0.5, label = 'Churn = 1')
+    plt.xlabel(x_col)
+    plt.ylabel(y_col)
+    plt.title(f"{y_col} vs {x_col}")
+    if savefig: plt.savefig(f'{x_col}_{y_col}_XO_scatter.png', bbox_inches='tight')
     plt.show()
