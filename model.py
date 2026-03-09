@@ -1,5 +1,5 @@
 import statsmodels.api as sm
-
+import matplotlib.pyplot as plt
 
 def simple_logit_model(df, x_col, y_col):
     """
@@ -142,3 +142,48 @@ def logit_reg_forw(df, x_columns, y_column , print_out = False, summary = False)
             if summary: print(list(results.values())[-1].summary())
             break
     return results
+
+def res_pearson(model):
+    return model.resid_pearson
+
+def res_hist(residuals, y_label, savefig= False, bins= 20):
+    """
+    Plotter residualer histogram
+    :param residuals: Residualer av modell
+    :param savefig: hvis True, lagrer figur
+    :param x_axis: default churn, utfallsvaruiabel
+    :return: None
+    """
+    plt.hist(residuals, bins = bins)
+    plt.xlabel('Residualer')
+    plt.ylabel(y_label)
+    plt.title('Histogram av residualer')
+    if savefig: plt.savefig('res_hist.png', dpi=300)
+    plt.show()
+
+#qq-plot
+def qq_plot(residuals, savefig= False):
+    sm.qqplot(residuals, line='45')
+    plt.title('QQ-plot av residualer')
+    if savefig: plt.savefig('res_qq.png', dpi =300)
+    plt.show()
+
+#residualplot
+def res_plot(model, residuals, savefig= False):
+
+    fitted = model.fittedvalues
+    plt.scatter(fitted, residuals)
+    plt.xlabel("Predikerte verdier")
+    plt.ylabel("Residualer")
+    plt.title("Residualplot")
+    if savefig: plt.savefig('res_plot.png', dpi =300)
+    plt.show()
+
+def residuals(model, savefig= False, residual_hist= True, y_label = 'churn', residual_qq= True, residual_plot = True):
+    residuals = res_pearson(model)
+    if residual_hist:
+        res_hist(residuals, y_label, savefig= savefig)
+    if residual_qq:
+        qq_plot(residuals, savefig= savefig)
+    if residual_plot:
+        res_plot(model, residuals, savefig= savefig)
