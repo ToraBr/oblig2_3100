@@ -1,4 +1,5 @@
 import pandas as pd
+from itertools import combinations
 
 def encode_categorical(df, column_names= None):
     #metode for dummyvariabler
@@ -51,3 +52,20 @@ def load_n_clean_data(path, clean=True, columns_to_remove = None, columns_to_dum
         df = clean_data(df)
     return df
 
+
+def variable_combinations(x_cols, max_vars=None):
+    """
+    Returnerer alle kombinasjoner av x_cols som en liste av lister.
+    Hver kombinasjon er en liste av kolonnenavn.
+    max_vars: maks antall variabler i en kombinasjon (default: alle)
+    """
+    all_combinations = []
+
+    if max_vars is None:
+        max_vars = len(x_cols)
+
+    for r in range(1, max_vars + 1):
+        for comb in combinations(x_cols, r):
+            all_combinations.append(list(comb))  # konverter tuple til liste
+
+    return all_combinations

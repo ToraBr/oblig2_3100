@@ -73,6 +73,7 @@ def model_custom_summary(results, print_out=False):
         ])
 
     if print_out:
+
         for row in data:
             rounded_row = [row[0]] + [round(x, 4) for x in row[1:]]
             print(rounded_row)
@@ -100,21 +101,7 @@ def find_lowest_aic_forw_select(df, x_columns, selected, y_column):
 
     return best_var,  best_model
 
-"""
-def find_lowest_aic_forw_select (df, x_columns, selected , y_column ) :
-    results = {}
-    for x in x_columns:
-        x_vars = selected + [x]
-        X = sm.add_constant(df[x_vars])
-        y = df[y_column]
-        model = sm.Logit(y, X).fit(disp = False)
-        results [x] = model.aic
-        best_var = min(results, key=results.get)
-        best_aic = results[best_var]
-        best_model = model[best_var]  # hent modellen for den beste variabelen
 
-        return best_var, best_aic, best_model
-"""
 def logit_reg_forw(df, x_columns, y_column , print_out = False, summary = False):
     results = {}
     remaining_vars =list(x_columns) # ny liste som jeg kanendre
@@ -143,8 +130,8 @@ def logit_reg_forw(df, x_columns, y_column , print_out = False, summary = False)
             break
     return results
 
-def res_pearson(model):
-    return model.resid_pearson
+def res_dev(model):
+    return model.resid_dev
 
 def res_hist(residuals, y_label, savefig= False, bins= 20):
     """
@@ -173,6 +160,7 @@ def res_plot(model, residuals, savefig= False):
 
     fitted = model.fittedvalues
     plt.scatter(fitted, residuals)
+    plt.axhline(y=0)
     plt.xlabel("Predikerte verdier")
     plt.ylabel("Residualer")
     plt.title("Residualplot")
@@ -180,7 +168,7 @@ def res_plot(model, residuals, savefig= False):
     plt.show()
 
 def residuals(model, savefig= False, residual_hist= True, y_label = 'churn', residual_qq= True, residual_plot = True):
-    residuals = res_pearson(model)
+    residuals = res_dev(model)
     if residual_hist:
         res_hist(residuals, y_label, savefig= savefig)
     if residual_qq:
