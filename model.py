@@ -134,7 +134,7 @@ def logit_reg_forw(df, x_columns, y_column , print_out = False, summary = False)
 def res_dev(model):
     return model.resid_dev
 
-def res_hist(residuals, y_label, savefig= False, bins= 20):
+def res_hist(residuals, savefig= False, bins= 20):
     """
     Plotter residualer histogram
     :param residuals: Residualer av modell
@@ -144,7 +144,7 @@ def res_hist(residuals, y_label, savefig= False, bins= 20):
     """
     plt.hist(residuals, bins = bins)
     plt.xlabel('Residualer')
-    plt.ylabel(y_label)
+    plt.ylabel('Observasjoner')
     plt.title('Histogram av residualer')
     if savefig: plt.savefig('res_hist.png', dpi=300)
     plt.show()
@@ -168,10 +168,10 @@ def res_plot(model, residuals, savefig= False):
     if savefig: plt.savefig('res_plot.png', dpi =300)
     plt.show()
 
-def residuals(model, savefig= False, residual_hist= True, y_label = 'churn', residual_qq= True, residual_plot = True):
+def residuals(model, savefig= False, residual_hist= True,  residual_qq= True, residual_plot = True):
     residuals = res_dev(model)
     if residual_hist:
-        res_hist(residuals, y_label, savefig= savefig)
+        res_hist(residuals, savefig= savefig)
     if residual_qq:
         qq_plot(residuals, savefig= savefig)
     if residual_plot:
