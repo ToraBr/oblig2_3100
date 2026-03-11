@@ -1,13 +1,13 @@
 import statsmodels.api as sm
 import matplotlib.pyplot as plt
 
-def simple_logit_model(df, x_col, y_col):
+def simple_logit_model(df, x_col, y_col, print_out = False):
     """
     Lager en enkel logistisk regresjonsmodell for én forklaringsvariabel.
 
     Args:
         df (pd.DataFrame)
-        x_col (str): utfallsvariabel
+        x_col (list of str): parametre
         y (str): utfallsvariabel
 
     Returns:
@@ -17,6 +17,7 @@ def simple_logit_model(df, x_col, y_col):
     y = df[y_col]
     model = sm.Logit(y, X)
     result = model.fit(disp=False)
+    if print_out: print(result.summary())
     return result
 
 
