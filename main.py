@@ -27,7 +27,7 @@ model = list(model_list.values())[-1]
 
 residuals(model)
 
-x_vars1 = ['Status', 'Complains', 'Customer Value', 'Frequency of use','Call  Failure', 'Frequency of SMS', 'Charge  Amount', 'Subscription  Length']
+x_vars1 = ['Status', 'Complains', 'Customer Value', 'Frequency of use','Call  Failure', 'Frequency of SMS']
 feature_sets_1 = variable_combinations(x_vars1)
 results_df_1 = evaluate_models(df, feature_sets_1)  # tren og evaluer modellene
 print(results_df_1)
